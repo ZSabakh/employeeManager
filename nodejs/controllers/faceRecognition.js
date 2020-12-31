@@ -1,16 +1,30 @@
 const spawn = require("child_process").spawn;
 fs = require("fs");
+var translit = require("translitit-latin-to-mkhedruli-georgian");
+const translitSpecial = require("../utility/translit");
+
 //test test test
 exports.faceRecognition = (req, res, next) => {
   picURL = req.body.picURL;
   console.log(picURL);
   //Mikheil saakashvili pics accepted only !!!!!
   const pythonProcess = spawn("python", [
-    "./utility/FaceRec/FaceRecognitionWithProbabilies.py",
+    "./utility/FaceRec/labtest.py",
     picURL,
   ]);
-  pythonProcess.stdout.on("data", function (data) {
-    res.send({ probability: data.toString() });
+  pythonProcess.stdout.on("data", function (incomingData) {
+    data = JSON.parse(incomingData);
+    results = [];
+    data.Name.forEach(function (value, i) {
+      console.log(data.Name[i]);
+      results.push({
+        name: translit(translitSpecial.translitSpecial3(data.Name[i])),
+        probability: data.Probability[i],
+      });
+    });
+
+    res.send(results);
+    console.log(results);
   });
 };
 

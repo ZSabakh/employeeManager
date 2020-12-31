@@ -7,9 +7,9 @@ import Spinner from "../../components/spinner/Spinner";
 const FaceRec = () => {
   const [image, setImage] = useState(null);
   const [serverImage, setServerImage] = useState("");
-  const [results, setResults] = useState("");
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  console.log(results);
   const onInputChange = (event) => {
     setImage(event.target.files[0]);
   };
@@ -19,7 +19,7 @@ const FaceRec = () => {
     var findParams = new URLSearchParams();
     findParams.append("picURL", picURL);
     PostData("face_recognition", findParams).then((result) => {
-      setResults(result.probability);
+      setResults(result);
       setLoading(false);
     });
   };
@@ -48,7 +48,28 @@ const FaceRec = () => {
           ) : null}
         </div>
         {loading ? <Spinner /> : null}
-        {results ? <p className="facerec_results">{results}</p> : null}
+        <div className="detailed_container">
+          {results.map((result, index) => (
+            <div className="detailed_card" key={index}>
+              <h2>{result.name}</h2>
+
+              <img
+                src="https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif"
+                // {
+                //   results[index].image === "false"
+                //     ? "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif"
+                //     : results[index].image.charAt(0) === "/"
+                //     ? `data:image/png;base64,${results[index].image}`
+                //     : `data:image/png;base64,${atob(results[index].image)}`
+                // }
+                alt="Person"
+              />
+              <p>
+                Probability: <u>{result.probability}</u>
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

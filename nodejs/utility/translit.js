@@ -16,3 +16,13 @@ exports.translitSpecial2 = (word) => {
   word = word.replace(/ც/g, "c");
   return word;
 };
+exports.translitSpecial3 = (word) => {
+  word = word.replace(/c/g, "ც");
+  word = word.replace(/kh/g, "ხ");
+  word = word.replace(/sh/g, "შ");
+  word = word.replace(/t/g, "თ");
+  word = word.replace(/T/g, "ტ");
+  word = word.replace(/q/g, "ქ");
+  word = word.replace(/gh/g, "ღ");
+  return word;
+};
