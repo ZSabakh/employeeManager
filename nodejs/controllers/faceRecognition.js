@@ -1,23 +1,16 @@
 const spawn = require("child_process").spawn;
 fs = require("fs");
-
 //test test test
 exports.faceRecognition = (req, res, next) => {
   picURL = req.body.picURL;
   console.log(picURL);
   //Mikheil saakashvili pics accepted only !!!!!
   const pythonProcess = spawn("python", [
-    "./utility/FaceRec/labtest.py",
+    "./utility/FaceRec/FaceRecognitionWithProbabilies.py",
     picURL,
   ]);
-  pythonProcess.stdout.on("data", function (incomingData) {
-    data = JSON.parse(incomingData);
-    results = [{}];
-    data.Name.forEach(function (value, i) {
-      results.push({ name: data.Name[i], probability: data.Probability[i] });
-    });
-
-    res.send(results);
+  pythonProcess.stdout.on("data", function (data) {
+    res.send({ probability: data.toString() });
   });
 };
 
