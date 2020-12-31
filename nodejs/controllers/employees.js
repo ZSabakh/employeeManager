@@ -17,10 +17,10 @@ exports.postEmployeeFind = (req, res, next) => {
 };
 
 exports.postEmployeeFindV2 = (req, res, next) => {
-  const fname = req.body.fname;
-  const lname = req.body.lname;
-  const onPage = req.body.onPage;
-  const pages = req.body.pages;
+  const fname = req.body.first_name;
+  const lname = req.body.last_name;
+  const onPage = req.body.limit;
+  const pages = req.body.page;
 
   Employee.findEmployeeV2(fname, lname, onPage, pages)
     .then(([person, bufData]) => {
