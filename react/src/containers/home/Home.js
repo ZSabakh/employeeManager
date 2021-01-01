@@ -160,7 +160,6 @@ function Home() {
                 setResults([]);
                 setSearching(true);
                 setLoading(true);
-                console.log(item.living_place);
                 fromAddress(item.living_place);
               }}
             />

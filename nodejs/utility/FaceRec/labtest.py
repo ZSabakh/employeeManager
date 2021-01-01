@@ -29,8 +29,8 @@ image_to_scan = "test.jpg"
 starting_image = cv2.imread(image_to_scan)
 
 image_to_detect = face_recognition.load_image_file(image_to_scan)
-faces_locations = face_recognition.face_locations(image_to_detect, model="hog", number_of_times_to_upsample=4)
-faces_encodings = face_recognition.face_encodings(image_to_detect, faces_locations, num_jitters=5, model="large")
+faces_locations = face_recognition.face_locations(image_to_detect, model="hog", number_of_times_to_upsample=2)
+faces_encodings = face_recognition.face_encodings(image_to_detect, faces_locations, num_jitters=3, model="large")
 face_distances = face_recognition.face_distance(all_face_encodings, faces_encodings)
 
 
@@ -51,7 +51,7 @@ for one_face_location, one_face_encoding in zip(faces_locations, faces_encodings
 
 results = {"Name": [], "Probability": []}
 
-for x in range(5):
+for x in range(6):
     results["Name"].append(translit(list(name_index.keys())[x][:-4], 'ka', reversed=True))
     results["Probability"].append(roundToPercentage(list(name_index.values())[x]))
 

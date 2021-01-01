@@ -1,5 +1,6 @@
 .facerec_content {
   margin: 2.5% 2.5%;
+  display: flex;
 }
 
 .facerec_form {

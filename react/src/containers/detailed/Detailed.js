@@ -40,17 +40,14 @@ const Detailed = (props) => {
 
         PostData("find_with_pid", pageParams)
           .then((resp) => {
-            console.log(resp);
             if (resp.length > 0) {
               //
               //
-              console.log(resp);
               person.image = resp[0].image_code;
               setResults([...results]);
             }
           })
           .then(() => {
-            console.log(result);
             setResults(result);
             setLoading(false);
           })

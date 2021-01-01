@@ -12,11 +12,11 @@ exports.faceRecognition = (req, res, next) => {
     "./utility/FaceRec/labtest.py",
     picURL,
   ]);
+
   pythonProcess.stdout.on("data", function (incomingData) {
     data = JSON.parse(incomingData);
     results = [];
     data.Name.forEach(function (value, i) {
-      console.log(data.Name[i]);
       results.push({
         name: translit(translitSpecial.translitSpecial3(data.Name[i])),
         probability: data.Probability[i],
@@ -24,7 +24,6 @@ exports.faceRecognition = (req, res, next) => {
     });
 
     res.send(results);
-    console.log(results);
   });
 };
 

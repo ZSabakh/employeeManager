@@ -17,9 +17,11 @@ exports.translitSpecial2 = (word) => {
   return word;
 };
 exports.translitSpecial3 = (word) => {
-  word = word.replace(/c/g, "ც");
   word = word.replace(/kh/g, "ხ");
   word = word.replace(/sh/g, "შ");
+  word = word.replace(/ch'/g, "ჭ");
+  word = word.replace(/ch/g, "ჭ");
+  word = word.replace(/c/g, "ც");
   word = word.replace(/t/g, "თ");
   word = word.replace(/T/g, "ტ");
   word = word.replace(/q/g, "ქ");

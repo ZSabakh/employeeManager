@@ -9,7 +9,6 @@ const FaceRec = () => {
   const [serverImage, setServerImage] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log(results);
   const onInputChange = (event) => {
     setImage(event.target.files[0]);
   };
@@ -19,12 +18,33 @@ const FaceRec = () => {
     var findParams = new URLSearchParams();
     findParams.append("picURL", picURL);
     PostData("face_recognition", findParams).then((result) => {
-      setResults(result);
-      setLoading(false);
+      result.forEach(function (person) {
+        person.image = "false";
+
+        var pageParams = new URLSearchParams();
+        pageParams.append("pid", person.name.split(" ")[2]);
+        pageParams.append("lname", person.name.split(" ")[0]);
+
+        PostData("find_with_pid", pageParams)
+          .then((resp) => {
+            if (resp.length > 0) {
+              person.image = resp[0].image_code;
+              setResults([...results]);
+            }
+          })
+          .then(() => {
+            setResults(result);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
     });
   };
 
   const uploadFile = (file) => {
+    setResults([]);
     const fileData = new FormData();
     fileData.append("image", file);
     PostData("faceupload", fileData, true).then((res) => {
@@ -54,18 +74,17 @@ const FaceRec = () => {
               <h2>{result.name}</h2>
 
               <img
-                src="https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif"
-                // {
-                //   results[index].image === "false"
-                //     ? "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif"
-                //     : results[index].image.charAt(0) === "/"
-                //     ? `data:image/png;base64,${results[index].image}`
-                //     : `data:image/png;base64,${atob(results[index].image)}`
-                // }
+                src={
+                  results[index].image === "false"
+                    ? "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif"
+                    : results[index].image.charAt(0) === "/"
+                    ? `data:image/png;base64,${results[index].image}`
+                    : `data:image/png;base64,${atob(results[index].image)}`
+                }
                 alt="Person"
               />
               <p>
-                Probability: <u>{result.probability}</u>
+                Probability: <u>{result.probability}%</u>
               </p>
             </div>
           ))}
