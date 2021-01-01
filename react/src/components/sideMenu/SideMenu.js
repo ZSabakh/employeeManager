@@ -10,8 +10,7 @@ const SideMenu = (props) => {
         <ul className="side_navigation">
           <li>
             <NavLink
-              exact
-              to="/"
+              to="/home"
               style={{ color: "ivory" }}
               activeStyle={{ color: "red" }}
             >
