@@ -1,19 +1,21 @@
 export function PostData(url, params, isFile) {
-  var myHeaders0 = new Headers();
-
+  var myHeaders = new Headers();
+  if (localStorage.getItem("token")) {
+    myHeaders.append("Authorization", localStorage.getItem("token"));
+  }
   if (isFile !== true) {
-    myHeaders0.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   }
 
-  var requestOptions0 = {
+  var requestOptions = {
     method: "POST",
-    headers: myHeaders0,
+    headers: myHeaders,
     body: params,
     redirect: "follow",
   };
 
   return fetch(
     "http://localhost:4000/" + url,
-    requestOptions0
+    requestOptions
   ).then((response) => response.json());
 }

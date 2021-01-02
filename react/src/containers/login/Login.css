@@ -45,7 +45,6 @@
   background-color: #395f63;
 }
 
-.login_form button a {
-  text-decoration: none;
-  color: inherit;
+.login_form p {
+  color: rgb(196, 24, 24);
 }

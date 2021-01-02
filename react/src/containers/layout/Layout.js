@@ -24,7 +24,9 @@ const Layout = () => {
         )}
       />
       <div className="content_container">
-        {authorized != true && CURRENT_PATH != "/" ? <Redirect to="/" /> : null}
+        {authorized !== true && CURRENT_PATH !== "/" ? (
+          <Redirect to="/" />
+        ) : null}
 
         {authorized ? (
           <>

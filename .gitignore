@@ -1,5 +1,7 @@
 /react/node_modules/*
+/react/.env
 /nodejs/node_modules/*
-/react/src/services/PostSecretData.js
 .DS_Store
 /nodejs/utility/FaceRec/dataset
+/nodejs/uploads/*
+/nodejs/.env

@@ -13,8 +13,6 @@ class Modal extends Component {
     );
   }
 
-  UNSAFE_componentWillUpdate() {}
-
   render() {
     return (
       <>
