@@ -6,11 +6,14 @@ const translitSpecial = require("../utility/translit");
 //test test test
 exports.faceRecognition = (req, res, next) => {
   picURL = req.body.picURL;
+  difficulty = req.body.difficulty;
+  console.log(difficulty);
   console.log(picURL);
   //Mikheil saakashvili pics accepted only !!!!!
   const pythonProcess = spawn("python", [
     "./utility/FaceRec/labtest.py",
     picURL,
+    difficulty,
   ]);
 
   pythonProcess.stdout.on("data", function (incomingData) {

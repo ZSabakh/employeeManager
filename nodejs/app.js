@@ -16,8 +16,12 @@ app.use(cors());
 mongoose.connect(
   process.env.MONGO_INFO,
   { useUnifiedTopology: true, useNewUrlParser: true },
-  () => {
-    console.log("DB Success");
+  (err, db) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("DB Success");
+    }
   }
 );
 

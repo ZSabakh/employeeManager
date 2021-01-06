@@ -6,9 +6,11 @@ import Spinner from "../../components/spinner/Spinner";
 
 const FaceRec = () => {
   const [image, setImage] = useState(null);
+  const [difficulty, setDifficulty] = useState("easy");
   const [serverImage, setServerImage] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const onInputChange = (event) => {
     setImage(event.target.files[0]);
   };
@@ -17,6 +19,7 @@ const FaceRec = () => {
     setLoading(true);
     var findParams = new URLSearchParams();
     findParams.append("picURL", picURL);
+    findParams.append("difficulty", difficulty);
     PostData("face_recognition", findParams).then((result) => {
       result.forEach(function (person) {
         person.image = "false";
@@ -58,7 +61,7 @@ const FaceRec = () => {
       <div className="facerec_content">
         <div className="facerec_form">
           <input type="file" onChange={(event) => onInputChange(event)} />
-          <button onClick={() => uploadFile(image)}>Hey</button>
+          <button onClick={() => uploadFile(image)}>Find</button>
           {serverImage ? (
             <img
               alt="Face to scan"
@@ -66,6 +69,16 @@ const FaceRec = () => {
               src={`http://localhost:4000/faceimages/${serverImage}`}
             />
           ) : null}
+          <p>Choose difficulty of finding face</p>
+          <select
+            name="options"
+            value={difficulty}
+            onChange={(event) => setDifficulty(event.target.value)}
+          >
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
         </div>
         {loading ? <Spinner /> : null}
         <div className="detailed_container">
